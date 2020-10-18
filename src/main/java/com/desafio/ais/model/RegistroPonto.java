@@ -23,8 +23,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 // @NamedQuery(name = "RegistroPonto.findByIdFuncionarioAndDataAtual", query = "select r from RegistroPonto r where r.")
-@Table(name = "Registro_ponto",  uniqueConstraints={@UniqueConstraint(columnNames = "dataRegistro")})
-@Entity
+//@Table(name = "Registro_ponto",  uniqueConstraints={@UniqueConstraint(columnNames = "dataRegistro")})
+//@Entity
 @Getter
 @Setter
 @NoArgsConstructor

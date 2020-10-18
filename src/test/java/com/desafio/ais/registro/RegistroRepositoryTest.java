@@ -1,16 +1,19 @@
 package com.desafio.ais.registro;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.core.annotation.Order;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import static com.desafio.ais.builders.BuilderRegistroFactory.*;
 
 import com.desafio.ais.builders.BuilderRegistroFactory;
 import com.desafio.ais.model.Registro;
@@ -34,6 +37,6 @@ public class RegistroRepositoryTest {
 		 Optional<Registro> confere =  repository.findBydataRegistro(registro.getDataRegistro());
 		 assertNotNull(confere.isPresent());
 	 }
-	 
+//	 
 
 }

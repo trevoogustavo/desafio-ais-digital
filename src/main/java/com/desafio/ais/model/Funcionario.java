@@ -16,8 +16,8 @@ import javax.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 
-@Table(name = "Funcionario", uniqueConstraints={@UniqueConstraint(columnNames = "matricula")} )
-@Entity
+//@Table(name = "Funcionario", uniqueConstraints={@UniqueConstraint(columnNames = "matricula")} )
+//@Entity
 @Getter
 @Setter
 public class Funcionario implements Serializable{

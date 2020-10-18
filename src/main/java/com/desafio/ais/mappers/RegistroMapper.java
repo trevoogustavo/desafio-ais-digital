@@ -12,8 +12,7 @@ import com.desafio.ais.model.Registro;
 @Scope("singleton")
 public class RegistroMapper {
 
-    @Autowired
-    FuncionarioMapper funcionarioMapper;
+
 
 //    public RegistroPontoDTO toDTO(RegistroPonto entity) {
 //        if ( entity == null ) {

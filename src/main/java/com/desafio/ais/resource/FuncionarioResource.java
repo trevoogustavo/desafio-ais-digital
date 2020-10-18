@@ -28,37 +28,37 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RequestMapping("/funcionarios")
 public class FuncionarioResource {
 
-	@Autowired
-	FuncionarioService service;
-	
-	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	@Operation(summary  = "Registro de Funcionario")
-	@ApiResponses(value = {
-		@ApiResponse(responseCode = "201", 
-				description = "Funcionário registrado com sucesso",
-				content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FuncionarioDTO.class))}),
-		@ApiResponse(responseCode = "500", 
-		description = "Violação de Unique Constraint",  
-		content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
-	})
-	public ResponseEntity<FuncionarioDTO> salvar(@RequestBody FuncionarioDTO funcDTO) throws ErroNegocioalException{
-		return new ResponseEntity<FuncionarioDTO>(service.salvar(funcDTO), HttpStatus.OK);
-	}
-	
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	@Operation(summary  = "Lista  Funcionario")
-	@ApiResponses(value = {
-		@ApiResponse(responseCode = "200", 
-				description = "Sucesso ao consultar Funcionarios",
-				content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FuncionarioDTO.class))}),
-		@ApiResponse(responseCode = "500", 
-		description = "Erro interno da aplicação",  
-		content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
-	})
-	public ResponseEntity listarTodos() throws ErroNegocioalException{
-		return new ResponseEntity(new ArrayList<FuncionarioDTO>(), HttpStatus.OK);
-	}
+//	@Autowired
+//	FuncionarioService service;
+//	
+//	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+//	@ResponseBody
+//	@Operation(summary  = "Registro de Funcionario")
+//	@ApiResponses(value = {
+//		@ApiResponse(responseCode = "201", 
+//				description = "Funcionário registrado com sucesso",
+//				content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FuncionarioDTO.class))}),
+//		@ApiResponse(responseCode = "500", 
+//		description = "Violação de Unique Constraint",  
+//		content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
+//	})
+//	public ResponseEntity<FuncionarioDTO> salvar(@RequestBody FuncionarioDTO funcDTO) throws ErroNegocioalException{
+//		return new ResponseEntity<FuncionarioDTO>(service.salvar(funcDTO), HttpStatus.OK);
+//	}
+//	
+//	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+//	@ResponseBody
+//	@Operation(summary  = "Lista  Funcionario")
+//	@ApiResponses(value = {
+//		@ApiResponse(responseCode = "200", 
+//				description = "Sucesso ao consultar Funcionarios",
+//				content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FuncionarioDTO.class))}),
+//		@ApiResponse(responseCode = "500", 
+//		description = "Erro interno da aplicação",  
+//		content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
+//	})
+//	public ResponseEntity listarTodos() throws ErroNegocioalException{
+//		return new ResponseEntity(new ArrayList<FuncionarioDTO>(), HttpStatus.OK);
+//	}
 	
 }

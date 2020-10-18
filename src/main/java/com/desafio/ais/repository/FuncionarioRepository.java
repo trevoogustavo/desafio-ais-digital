@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.desafio.ais.model.Funcionario;
 
 @Repository
-public interface FuncionarioRepository extends JpaRepository<Funcionario, Long>{
-    Funcionario findByMatricula(String matricula);
+public interface FuncionarioRepository {
+    
 }

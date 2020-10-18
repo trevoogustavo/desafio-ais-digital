@@ -1,6 +1,5 @@
 package com.desafio.ais.service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -22,8 +21,6 @@ import com.desafio.ais.model.Registro;
 import com.desafio.ais.repository.RegistroRepository;
 import com.desafio.ais.util.ValidacaoDataUtil;
 
-import net.bytebuddy.description.modifier.EnumerationState;
-
 
 @Service
 public class RegistroPontoServiceImpl{
@@ -31,10 +28,7 @@ public class RegistroPontoServiceImpl{
 	
 	@Autowired
 	RegistroMapper mapper;
-	
-	@Autowired
-	FuncionarioService funcionarioService;
-	
+
 	@Autowired
 	RegistroRepository repository;
 	
@@ -60,10 +54,10 @@ public class RegistroPontoServiceImpl{
 		if(optional.isPresent()) {
 			Registro registro = optional.get();
 			registro = mapper.RegitroUpdateDTOtoEntity(dto);
-			validaAlteracaoRegistro(registro);
 			registro.setId(id);
 			registro.setRegistroFinal(optional.get().isRegistroFinal());
 			registro.setRegistroInicial(optional.get().isRegistroInicial());
+			validaAlteracaoRegistro(registro, optional.get());		
 			repository.save(registro);
 		}else  {
 			throw new ErroNegocioalException("Registro não encontrado na Base de dados");			
@@ -80,9 +74,17 @@ public class RegistroPontoServiceImpl{
 		List<Registro> list =  repository.findByMes(mes);
 		return  null;
 	}
-	private void  validaAlteracaoRegistro(Registro registro ) throws ErroNegocioalException {
+	
+		private void  validaAlteracaoRegistro(Registro registro,  Registro bd ) throws ErroNegocioalException {
 		validaSobrePosicaoPeriodoManha(registro.getTurno(), registro.getHoras());
 		validaSobrePosicaoPeriodoTarde(registro.getTurno(), registro.getHoras());
+		 if(bd.isRegistroFinal()) {
+			 Registro bdAnterior = repository.findRegistroByInicialTurno(bd.getTurno(), bd.getDia(), bd.getMes(), true);
+			 ValidacaoDataUtil.validaDataFinalMaiorQueInicial(bdAnterior.getDataRegistro(), registro.getDataRegistro());
+		 } else {
+			 Registro bdPosterior =  repository.findRegistroByFinalTurno(bd.getTurno(), bd.getDia(), bd.getMes(), true);
+			 ValidacaoDataUtil.validaDataFinalMaiorQueInicial(registro.getDataRegistro(), bdPosterior.getDataRegistro());
+		 }
 	}
 	
 	private void verificaBatida(Registro registro) throws ErroNegocioalException {
@@ -105,7 +107,7 @@ public class RegistroPontoServiceImpl{
 			if(Objects.isNull(bd)) {
 				registro.setRegistroInicial(true);
 			} else {
-				validaHoraFinalMaiorQueInicial(bd.getDataRegistro(), registro.getDataRegistro());
+				ValidacaoDataUtil.validaDataFinalMaiorQueInicial(bd.getDataRegistro(), registro.getDataRegistro());
 				registro.setRegistroFinal(true);
 			}
 		}else {
@@ -116,7 +118,7 @@ public class RegistroPontoServiceImpl{
 				calculaHoraDeAlmoco(registro);
 				registro.setRegistroInicial(true);
 			} else {
-				validaHoraFinalMaiorQueInicial(bd.getDataRegistro(), registro.getDataRegistro());				
+				ValidacaoDataUtil.validaDataFinalMaiorQueInicial(bd.getDataRegistro(), registro.getDataRegistro());				
 				registro.setRegistroFinal(true);
 			}
 		}
@@ -138,11 +140,17 @@ public class RegistroPontoServiceImpl{
 	}
 	
 	
-	private void validaHoraFinalMaiorQueInicial(LocalDateTime horaInicio, LocalDateTime horaFim) throws ErroNegocioalException {
-		if (ValidacaoDataUtil.validaDataFinalMaiorQueInicial(horaInicio, horaFim)) {
-			throw new ErroNegocioalException("Hora final do turno menor que hora inicial do turno");
-		}
-	}
+//	private void validaHoraFinalMaiorQueInicial(LocalDateTime horaInicio, LocalDateTime horaFim) throws ErroNegocioalException {
+//		if (!ValidacaoDataUtil.validaDataFinalMaiorQueInicial(horaInicio, horaFim)) {
+//			throw new ErroNegocioalException("Hora final do turno menor que hora inicial do turno");			
+//		}		
+//	}
+	
+//	private void validaHoraFinalMenorQueInicial(LocalDateTime horaInicio, LocalDateTime horaFim) throws ErroNegocioalException {
+//		if (!ValidacaoDataUtil.validaDataFinalMaiorQueInicial(horaInicio, horaFim)) {
+//			throw new ErroNegocioalException("Hora final do turno menor que hora inicial do turno");			
+//		}		
+//	}
 	
 	private void calculaHoraDeAlmoco(Registro registro) throws  ErroNegocioalException {
 		Registro registroBd = repository.findRegistroByFinalTurno(TurnoEnum.MATUTINO, registro.getDia(), registro.getMes(), true);
@@ -167,13 +175,13 @@ public class RegistroPontoServiceImpl{
 	}
 	
 	
-	
-	RegistroPontoDTO registraSaida(RegistroPontoDTO dto) throws ErroNegocioalException {
-		Funcionario funcionario = funcionarioService.buscaFuncionarioPorMatricula(dto.getFuncionarioDTO().getMatricula());
-		//RegistroPonto  registro = repository.findByIdFuncionarioAndDataAtual(funcionario.getId(), LocalDateTime.now());
-		//repository.save(registro);
-		return null;
-	}
+//	
+//	RegistroPontoDTO registraSaida(RegistroPontoDTO dto) throws ErroNegocioalException {
+//	
+//		//RegistroPonto  registro = repository.findByIdFuncionarioAndDataAtual(funcionario.getId(), LocalDateTime.now());
+//		//repository.save(registro);
+//		return null;
+//	}
 	
 	
 }

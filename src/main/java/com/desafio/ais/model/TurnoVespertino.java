@@ -15,8 +15,8 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Table(name = "Turno_Vespertino")
+//@Entity
+//@Table(name = "Turno_Vespertino")
 @Getter
 @Setter
 public class TurnoVespertino {

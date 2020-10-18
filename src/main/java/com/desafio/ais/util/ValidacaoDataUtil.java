@@ -3,6 +3,8 @@ package com.desafio.ais.util;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
+import com.desafio.ais.exceptions.ErroNegocioalException;
+
 public class ValidacaoDataUtil {
 
 	private ValidacaoDataUtil() {}
@@ -11,10 +13,13 @@ public class ValidacaoDataUtil {
 		return dataHoraInicio.isBefore(dataHoraFim);
 	}
 	
-	public static boolean validaDataFinalMaiorQueInicial(final LocalDateTime dataHoraInicio, final LocalDateTime dataHoraFim) {
-		return dataHoraFim.isAfter(dataHoraFim);
+	public static void validaDataFinalMaiorQueInicial(final LocalDateTime dataHoraInicio, final LocalDateTime dataHoraFim) throws  ErroNegocioalException{		
+		if(dataHoraFim.isBefore(dataHoraInicio)) { ;
+		throw new ErroNegocioalException("Hora final  menor que hora inicial");
+		}
 	}
 	
+
 	public static boolean validaDataInicialMenorQueAtual( final LocalDateTime dataHoraFim) {
 		return dataHoraFim.isBefore(LocalDateTime.now());
 	}
