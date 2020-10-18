@@ -18,10 +18,10 @@ public interface RegistroRepository extends JpaRepository<Registro, Long>{
 			@Param("dia")Integer diaMes,
 			@Param("mes")Integer mes);
 	
-	@Query("select r from Registro r where r.turno = :turno and r.dia = :dia and r.mes  =:mes ")
-	List<Registro> findByParams(@Param("turno")TurnoEnum turno,
-			@Param("dia")Integer diaMes,
-			@Param("mes")Integer mes);
+	///@Query("select r from Registro r where r.turno = :turno and r.dia = :dia and r.mes  =:mes ")
+	List<Registro> findByTurnoAndMesAndDiaOrderByDataRegistroDesc(TurnoEnum turno,
+			Integer diaMes,
+			Integer mes);
 	
 	@Query("select r from Registro r where r.mes = :mes and r.dia = :dia")
 	List<Registro> findRegistroByMesAndDia(@Param("mes")Integer mes,

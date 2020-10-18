@@ -37,14 +37,22 @@ public class AlocacaoHoraService {
 		return mapper.toDTO(alocacao);
 	}
 	
-	private void validaTempoHoras(AlocacaoHora alocacao) {
+	private void validaTempoHoras(AlocacaoHora alocacao) throws ErroNegocioalException{
 		// Lógica definia, só poderá salvar 4 registros por dia;
-		List<Registro> registrosManha = registroRepository.findByParams(TurnoEnum.MATUTINO ,alocacao.getMes(), alocacao.getDia());
-		List<Registro> registrosTarde = registroRepository.findByParams(TurnoEnum.VESPERTINO ,alocacao.getMes(), alocacao.getDia());
-		System.out.println(registrosManha.get(0).getDataRegistro());
+		LocalDateTime totalHoras;
+		List<Registro> registrosManha = registroRepository.findByTurnoAndMesAndDiaOrderByDataRegistroDesc(TurnoEnum.MATUTINO ,alocacao.getMes(), alocacao.getDia());
+		List<Registro> registrosTarde = registroRepository.findByTurnoAndMesAndDiaOrderByDataRegistroDesc(TurnoEnum.VESPERTINO ,alocacao.getMes(), alocacao.getDia());
 		
-//		LocalDateTime horarioInicialVespertino = registroDoDia.get(2).getDataRegistro();
-//		LocalDateTime horarioFinalVespertino = registroDoDia.get(3).getDataRegistro();
+		LocalDateTime horasManha = registrosManha.get(0).getDataRegistro();
+		LocalDateTime horasTarde = registrosTarde.get(0).getDataRegistro();
+		horasManha = horasManha.minusHours(registrosManha.get(1).getDataRegistro().getHour());
+		horasTarde = horasTarde.minusHours(registrosTarde.get(1).getDataRegistro().getHour());
+		horasManha = horasManha.plusHours(horasTarde.getHour() - 1);
+		if(horasManha.getHour() + alocacao.getQtdHoraTrabalho() > 8) {
+			 throw new ErroNegocioalException("Você já completou ás 8 horas de trabalho");
+		}
+		
+		System.out.println(horasManha);
 //		LocalDateTime minutosTrabalhados = registroDoDia.get(0).getDataRegistro();
 //		
 //		LocalDateTime totalHorasMatutino = horarioFinalMatutino.minusHours(horarioInicialMatutino.getHour());

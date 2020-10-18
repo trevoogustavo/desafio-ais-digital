@@ -14,7 +14,7 @@ public class ExceptionInterceptor extends ResponseEntityExceptionHandler{
 
 	  @ExceptionHandler(value = { ErroNegocioalException.class})
 	  protected ResponseEntity<Object> handleExceptions(ErroNegocioalException ex, WebRequest request) {
-		ApiError erro = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
+		//ApiError erro = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
 		  String bodyResponse = ex.getMessage();
 //		  ErroNegocioalException exceptionResponse =
 //	        new ErroNegocioalException(ex.getMessage(), ex.getCause().toString());
