@@ -9,7 +9,7 @@ public interface AbstractMapper<T, D> {
 
 	T toEntity(D dto);
 	
-	@InheritInverseConfiguration(name = "toEntity")
+	// @InheritInverseConfiguration(name = "toEntity")
 	D toDto(D entity);
 	
 	@IterableMapping(qualifiedByName = "toDto")

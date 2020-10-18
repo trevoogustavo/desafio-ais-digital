@@ -1,20 +1,16 @@
 package com.desafio.ais.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
 public class FuncionarioDTO {
 
 	private String matricula;
 	private String nome;
+	private List<RegistroPontoDTO> registros ;
 }
