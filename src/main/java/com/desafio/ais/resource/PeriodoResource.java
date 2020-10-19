@@ -46,7 +46,7 @@ public class PeriodoResource {
 			   @ApiResponse(responseCode = "500", description = "Erro Interno",  content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
 	   			})
 	public ResponseEntity<RegistroDTO> salvaRegistro(@RequestBody @Valid RegistroDTO registroDTO) throws ErroNegocioalException {
-		return new ResponseEntity<RegistroDTO>(service.salvaRegistro(registroDTO), HttpStatus.OK);
+		return new ResponseEntity<RegistroDTO>(service.salvaRegistro(registroDTO), HttpStatus.CREATED);
 	}
 	
 	@PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

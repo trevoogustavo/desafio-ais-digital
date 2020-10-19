@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.desafio.ais.dto.AlocacaoHoraDTO;
 import com.desafio.ais.exceptions.ErroNegocioalException;
-import com.desafio.ais.model.AlocacaoHora;
 import com.desafio.ais.service.AlocacaoHoraService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,7 +25,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/alocacoes")
-@CrossOrigin
+//@CrossOrigin("*")
 public class AlocacaoHorasResource {
 
 	@Autowired
@@ -43,6 +42,6 @@ public class AlocacaoHorasResource {
 			   @ApiResponse(responseCode = "500", description = "Erro Interno",  content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
 	   			})
 	public ResponseEntity<AlocacaoHoraDTO> salvar(@RequestBody @Valid AlocacaoHoraDTO dto) throws ErroNegocioalException {
-		return new ResponseEntity<AlocacaoHoraDTO>(service.salvar(dto), HttpStatus.OK);
+		return new ResponseEntity<AlocacaoHoraDTO>(service.salvar(dto), HttpStatus.CREATED);
 	}
 }
